@@ -8,6 +8,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.destroy_all
-user1 = User.new(email: "test@gmail.com")
+#User.destroy_all
+#user1 = User.new(email: "test@gmail.com")
+#user1.save!
 
+#ShortenedUrl.destroy_all
+#short_url1 = ShortenedUrl.create_short_url(user1, "example/test.com")
+#short_url2 = ShortenedUrl.create_short_url(user1, "example/test2.com")
+
+
+user1 = User.find_by(id: 8)
+short_url1 = ShortenedUrl.find_by(id: 7)
+Visit.record_visit!(user1, short_url1)
+p short_url1.num_recent_uniques
