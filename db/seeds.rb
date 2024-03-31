@@ -18,6 +18,4 @@
 
 
 user1 = User.find_by(id: 8)
-short_url1 = ShortenedUrl.find_by(id: 7)
-Visit.record_visit!(user1, short_url1)
-p short_url1.num_recent_uniques
+p user1.visited_urls

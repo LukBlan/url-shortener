@@ -3,7 +3,7 @@ class ShortenedUrl < ApplicationRecord
   validates :short_url, uniqueness: true
   belongs_to :submitter, foreign_key: :user_id, class_name: "User"
   has_many :visits, foreign_key: :short_url_id, class_name: "Visit"
-  has_many :visitors, through: :visits, source: :visitor
+  has_many :visitors, -> { distinct } ,through: :visits, source: :visitor
 
   def self.create_short_url(user, long_url)
     new_code = random_code
