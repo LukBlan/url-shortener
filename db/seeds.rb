@@ -16,6 +16,8 @@
 #short_url1 = ShortenedUrl.create_short_url(user1, "example/test.com")
 #short_url2 = ShortenedUrl.create_short_url(user1, "example/test2.com")
 
+tag = TagTopic.find(5)
+tag.popular_links
 
-user1 = User.find_by(id: 8)
-p user1.visited_urls
+
+
