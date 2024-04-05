@@ -1,6 +1,7 @@
 class ShortenedUrl < ApplicationRecord
   validates :user_id, :short_url, :long_url, presence: true
   validates :short_url, uniqueness: true
+  validate :no_spamming
   belongs_to :submitter, foreign_key: :user_id, class_name: "User"
   has_many :visits, foreign_key: :short_url_id, class_name: "Visit"
   has_many :mapped_tags, foreign_key: :short_url_id, class_name: "Tagging"
@@ -28,6 +29,18 @@ class ShortenedUrl < ApplicationRecord
 
   def num_recent_uniques
     Visit.where("created_at BETWEEN NOW() - INTERVAL '10 minutes' AND NOW()")
+  end
+
+  def no_spamming
+    submitter = self.submitter
+    user_urls = ShortenedUrl
+                  .where("created_at BETWEEN NOW() - INTERVAL '10 minutes' AND NOW() AND user_id = ?", submitter.id)
+                  .count
+    errors.add :short_url, "You cant create more than 5 links in 10 minutes" if user_urls >= 5
+  end
+
+  def nonpremium_max
+
   end
 end
 
