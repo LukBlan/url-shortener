@@ -17,10 +17,4 @@
 #short_url2 = ShortenedUrl.create_short_url(user1, "example/test2.com")
 
 user = User.find(8)
-ShortenedUrl.create_short_url!(user, "test.com.ar")
-ShortenedUrl.create_short_url!(user, "test1.com.ar")
 ShortenedUrl.create_short_url!(user, "test2.com.ar")
-ShortenedUrl.create_short_url!(user, "test3.com.ar")
-ShortenedUrl.create_short_url!(user, "test4.com.ar")
-ShortenedUrl.create_short_url!(user, "test5.com.ar")
-

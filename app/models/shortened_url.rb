@@ -1,7 +1,7 @@
 class ShortenedUrl < ApplicationRecord
   validates :user_id, :short_url, :long_url, presence: true
   validates :short_url, uniqueness: true
-  validate :no_spamming
+  validate :no_spamming, :nonpremium_max
   belongs_to :submitter, foreign_key: :user_id, class_name: "User"
   has_many :visits, foreign_key: :short_url_id, class_name: "Visit"
   has_many :mapped_tags, foreign_key: :short_url_id, class_name: "Tagging"
@@ -40,7 +40,10 @@ class ShortenedUrl < ApplicationRecord
   end
 
   def nonpremium_max
-
+    user = self.submitter
+    urls_amount = ShortenedUrl.where(:user_id => user.id).count
+    p urls_amount
+    errors.add :short_url, "You can't create more than 5 links if you are not a premium member" if urls_amount > 5
   end
 end
 
